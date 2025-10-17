@@ -18,6 +18,8 @@ pub enum Commands {
     Submit(SubmitArgs),
     Request(RequestArgs),
     Mirror(MirrorArgs),
+    Find(FindArgs),
+    Head(HeadArgs),
 }
 
 #[derive(Args, Debug)]
@@ -66,4 +68,28 @@ pub struct MirrorArgs {
 
     #[arg(long)]
     pub dry_run: bool,
+}
+
+#[derive(Args, Debug)]
+pub struct FindArgs {
+    #[arg(short, long)]
+    pub scope: String,
+
+    #[arg(long)]
+    pub host: String,
+
+    #[arg(short, long)]
+    pub port: String,
+}
+
+#[derive(Args, Debug)]
+pub struct HeadArgs {
+    #[arg(short, long)]
+    pub scope: String,
+
+    #[arg(short, long)]
+    pub keyfile: String,
+
+    #[arg(short, long)]
+    pub cache_dir: String,
 }

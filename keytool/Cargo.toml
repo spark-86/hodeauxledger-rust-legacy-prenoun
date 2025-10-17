@@ -8,6 +8,7 @@ anyhow.workspace = true
 ed25519-dalek.workspace = true
 blake3.workspace = true
 clap.workspace = true
+hex.workspace = true
 
 hl-core = { path = "../hl-core" }
 hl-io = { path = "../hl-io" }

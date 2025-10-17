@@ -3,6 +3,9 @@ use clap::Parser;
 use crate::argv::Commands;
 
 mod argv;
+mod bootstrap;
+mod find;
+mod head;
 mod mirror;
 mod request;
 mod submit;
@@ -41,6 +44,29 @@ async fn main() {
         }
         Commands::Mirror(mirror_args) => {
             let status = mirror::mirror(&mirror_args).await;
+            match status {
+                Ok(_) => {
+                    println!("Success");
+                }
+                Err(e) => {
+                    println!("Error: {}", e);
+                }
+            }
+        }
+        Commands::Find(find_args) => {
+            let status =
+                find::find_scope(&find_args, &parsed.config.unwrap(), &find_args.scope).await;
+            match status {
+                Ok(_) => {
+                    println!("Success");
+                }
+                Err(e) => {
+                    println!("Error: {}", e);
+                }
+            }
+        }
+        Commands::Head(head_args) => {
+            let status = head::get_head(&head_args.scope, &head_args.keyfile, &head_args.cache_dir);
             match status {
                 Ok(_) => {
                     println!("Success");

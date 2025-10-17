@@ -5,6 +5,7 @@ use crate::argv::Commands;
 mod argv;
 mod b64;
 mod generate;
+mod selfid;
 mod sign;
 mod verify;
 mod view;
@@ -32,5 +33,8 @@ fn main() {
         Commands::Verify(verify_args) => verify::verify(&verify_args).expect("Failed to verify"),
         Commands::View(view_args) => view::view(&view_args).expect("Failed to view"),
         Commands::Base64(b64_args) => b64::base64convert(&b64_args).expect("Failed to convert"),
+        Commands::SelfID(selfid_args) => {
+            selfid::selfid(&selfid_args).expect("Failed to get SelfID")
+        }
     }
 }

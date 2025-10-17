@@ -18,6 +18,8 @@ pub fn signature_usher_and_quorum(
         errors.push(error::E_SIG_INVALID, "Signature must be of type Author");
         return Ok(());
     }
+    // Add context to the R⬢
+    rhex.add_context(&None)?;
     // Next, sign as selected usher.
     let usher_pk = rhex.intent.usher_pk;
     let usher_key = Key::from_bytes(keymaster.get_matching(&usher_pk).unwrap());

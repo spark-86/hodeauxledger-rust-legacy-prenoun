@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use std::{io::Cursor, sync::Arc};
 
 use crate::argv::ListenArgs;
-use hl_core::{Rhex, from_base64, to_base64};
+use hl_core::{Rhex, from_base64};
 
 #[derive(Deserialize)]
 struct AppendRequest {

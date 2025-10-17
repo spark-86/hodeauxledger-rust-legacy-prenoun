@@ -1,10 +1,11 @@
 use hl_core::scope::scope::Scope;
 use rusqlite::{Connection, params};
 
-use crate::db::connect_db;
+use crate::db::{
+    authority::get_authorities, connect_db, policy::retrieve_policy, usher::get_ushers,
+};
 
-pub fn store_scope(scope: &Scope) -> Result<(), anyhow::Error> {
-    let cache = connect_db("./ledger/cache/cache.db")?;
+pub fn store_scope(cache: &Connection, scope: &Scope) -> Result<(), anyhow::Error> {
     let status = cache.execute(
         "INSERT OR REPLACE INTO scopes (scope, role, last_synced) VALUES (?1, ?2, ?3)",
         params![scope.name, scope.role.to_string(), scope.last_synced],
@@ -70,6 +71,14 @@ pub fn retrieve_scope(cache: &Connection, scope_name: &str) -> Result<Scope, any
     } else {
         Err(anyhow::anyhow!("Scope not found"))
     }
+}
+
+pub fn retrieve_scope_full(cache: &Connection, scope: &str) -> Result<Scope, anyhow::Error> {
+    let mut scope_data = retrieve_scope(cache, scope)?;
+    scope_data.policy = Some(retrieve_policy(cache, scope)?);
+    scope_data.authorities = get_authorities(cache, scope)?;
+    scope_data.ushers = get_ushers(cache, scope)?;
+    Ok(scope_data)
 }
 
 pub fn flush_scope(scope_name: &str) -> Result<(), anyhow::Error> {

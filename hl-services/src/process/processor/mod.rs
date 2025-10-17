@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use hl_core::{Config, Rhex, error, keymaster::keymaster::Keymaster, to_base64};
-use hl_io::db;
+use hl_io::{db, screen::print::pretty_print};
 
 use crate::{
     build,
@@ -87,7 +87,7 @@ pub fn process_rhex(
 
     // Current Hash
     if rhex.current_hash.is_some() {
-        validate_current_hash(rhex, &mut errors)?;
+        validate_current_hash(&rhex, &mut errors)?;
     }
     if rhex.signatures.len() != 1 && rhex.current_hash.is_none() {
         errors.push(
@@ -110,6 +110,7 @@ pub fn process_rhex(
             print!("[❌ R⬢ Invalid]");
             for (e, m) in errors.stack.iter().zip(errors.messages.iter()) {
                 println!(" - {}: {}", e, m);
+                pretty_print(rhex)?;
             }
         }
         let our_key = keymaster.get_primary_key();

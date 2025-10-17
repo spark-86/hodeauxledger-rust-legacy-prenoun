@@ -14,10 +14,19 @@ pub fn base64convert(b64_args: &B64Args) -> Result<(), anyhow::Error> {
         let mut output = fs::File::create(output)?;
         output.write_all(&input)?;
     } else {
-        // Output is base64
-        let input = fs::read(input).expect("Failed to read file");
-        let output = to_base64(&input);
-        println!("{}", output)
+        if input.starts_with("hex:") {
+            // Input is hex
+            let input = &input[4..];
+            let input = hex::decode(input)?;
+            let mut output = fs::File::create(output)?;
+            output.write_all(&input)?;
+            return Ok(());
+        } else {
+            // Output is base64
+            let input = fs::read(input).expect("Failed to read file");
+            let output = to_base64(&input);
+            println!("{}", output)
+        }
     }
     Ok(())
 }

@@ -17,6 +17,7 @@ pub enum Commands {
     Generate(GenerateArgs),
     View(ViewArgs),
     Base64(B64Args),
+    SelfID(SelfIDArgs),
 }
 
 #[derive(Args, Debug)]
@@ -75,4 +76,10 @@ pub struct B64Args {
 
     #[arg(short, long)]
     pub output: String,
+}
+
+#[derive(Args, Debug)]
+pub struct SelfIDArgs {
+    #[arg(short, long)]
+    pub keyfile: String,
 }

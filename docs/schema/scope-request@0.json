@@ -1,8 +1,0 @@
-{
-    "schema": "rhex://schema/schema-define@0",
-    "fields": [
-        { "id": 0, "name": "new_scope", "req": 1 },
-        { "id": 1, "name": "genesis_key", "req": 1 },
-        { "id": 2, "name": "ushers", "req": 1 }
-    ]
-}

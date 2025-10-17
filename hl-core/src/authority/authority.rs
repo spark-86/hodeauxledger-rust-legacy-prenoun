@@ -1,6 +1,6 @@
 use crate::Key;
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
 pub struct Authority {
     pub scope: String,
     pub key: Key,

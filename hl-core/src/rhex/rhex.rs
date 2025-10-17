@@ -84,6 +84,10 @@ impl Rhex {
         Ok(buf)
     }
 
+    pub fn to_json(&self) -> anyhow::Result<String> {
+        Ok(serde_json::to_string(&self)?)
+    }
+
     /// Preimage for the author (intent only)
     pub fn author_hash(&self) -> anyhow::Result<[u8; 32]> {
         let mut hasher = blake3::Hasher::new();

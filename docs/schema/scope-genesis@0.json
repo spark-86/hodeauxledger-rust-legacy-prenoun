@@ -1,8 +1,0 @@
-{
-    "schema": "rhex://schema/scope-genesis@0",
-    "fields": [
-        { "id": 0, "name": "note", "req": 0 },
-        { "id": 1, "name": "public_key", "req": 1 },
-        { "id": 2, "name": "unix_ms", "req": 0 }
-    ]
-}

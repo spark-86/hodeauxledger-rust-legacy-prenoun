@@ -2,7 +2,9 @@ use anyhow::bail;
 use ed25519_dalek::Signer;
 use zeroize::Zeroize;
 
-#[derive(Clone, serde::Serialize, serde::Deserialize)]
+use crate::b32::b32;
+
+#[derive(Clone, serde::Serialize, serde::Deserialize, Debug)]
 pub struct Key {
     pub sk: Option<[u8; 32]>,
     pub pk: Option<[u8; 32]>,
@@ -79,5 +81,16 @@ impl Key {
         let pk = ed25519_dalek::VerifyingKey::from_bytes(&self.pk.unwrap())?;
         let sig = ed25519_dalek::Signature::from_bytes(signature);
         Ok(pk.verify_strict(hash, &sig).is_ok())
+    }
+
+    pub fn compute_self_id(&self) -> Result<String, anyhow::Error> {
+        if self.pk.is_none() {
+            bail!("Key has no public key for computing SelfID");
+        }
+        let blake_hash = blake3::hash(&self.pk.unwrap());
+        let input = blake_hash.as_bytes();
+        let input = &input[0..10];
+        let self_id = b32::to_base32_crockford(input);
+        Ok(self_id)
     }
 }
