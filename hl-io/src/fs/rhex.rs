@@ -151,12 +151,12 @@ impl RhexSink for DirSink {
                 to_base32_crockford(r.intent.previous_hash.as_ref().unwrap()).to_ascii_lowercase()
             )
         };
-        /*println!(
+        println!(
             "Writing {} bytes to {}/{}",
             bytes.len(),
             self.root.display(),
             name
-        );*/
+        );
         fs::write(self.root.join(name), bytes)?;
         Ok(())
     }

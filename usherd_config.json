@@ -5,6 +5,6 @@
     "fs_dir": "./ledger/fs",
     "data_dir": "./",
     "cache_db": "./ledger/cache/cache.db",
-    "hot_keys": ["./Verondu3.sk", "./verovb.sk", "./schema.sk"],
+    "hot_keys": ["./secrets/master.key"],
     "verbose": true
 }

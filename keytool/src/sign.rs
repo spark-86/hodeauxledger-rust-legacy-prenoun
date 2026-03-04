@@ -150,6 +150,7 @@ pub fn sign(sign_args: &SignArgs) -> Result<(), Error> {
     match sig_type {
         "author" => {
             // Process signing
+            println!("signing author...");
             let hash = rhex.author_hash()?;
             let signature = signing_key.sign(&hash);
             let new_sig = Signature {
@@ -209,7 +210,9 @@ pub fn sign(sign_args: &SignArgs) -> Result<(), Error> {
     let mut dir_sink = hl_io::fs::rhex::DirSink::new(pb);
     let status = dir_sink.send(&rhex.clone());
     match status {
-        Ok(_) => {}
+        Ok(_) => {
+            println!("Wrote rhex to {}", output);
+        }
         Err(e) => {
             bail!("Error writing rhex: {}", e);
         }
